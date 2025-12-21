@@ -2,8 +2,10 @@
     <head>
         <meta charset="UTF-8">
         <title>Application Magasin</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
     </head>
-    <body>
+    <body id="pagination">
         <nav>
             <h1>Application Magasin</h1>
         </nav>
@@ -12,8 +14,9 @@
             <div id="contenu_page_produits">
                 <div id="table_produits">
                     <form action="{{ url_for('home') }}" method="post" id="filtre">
-                        <select id="bouton filtre" name="filtre" onchange="this.form.submit()">
+                        <select id="bouton_filtre" name="filtre" onchange="this.form.submit()">
                             <option value="">Filtrer</option>
+                            <option value="reference" {% if filtre_actif == 'reference' %}selected{% endif %}>Référence</option>
                             <option value="nom" {% if filtre_actif == 'nom' %}selected{% endif %}>Nom</option>
                             <option value="fabricant" {% if filtre_actif == 'fabricant' %}selected{% endif %}>Fabricant</option>
                             <option value="quantite" {% if filtre_actif == 'quantite' %}selected{% endif %}>Quantité</option>
@@ -26,7 +29,7 @@
                                 <th>Nom</th>
                                 <th>Fabricant</th>
                                 <th>Quantité</th>
-                                <th>Supression</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,17 +39,50 @@
                                 <td>{{ produit.nom }}</td>
                                 <td>{{ produit.fabricant }}</td>
                                 <td>{{ produit.quantite }}</td>
+                                <td><form action="{{ url_for('home', filtre=filtre_actif) }}" method="post" style="display: inline;">
+                                    <input type="hidden" name="nom" value="{{ produit.nom }}">
+                                    <button type="submit" class="supress-btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
+                                        Supprimer
+                                    </button>
+                                </form></td>
                             </tr>
  
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
-            <section class="pagination">
+                    <div id="creation_produit">
+                        <h2>Créer une plateforme</h2>
+                        <form id="creation_produit_form" method="POST" role="form" action="{{ url_for('home', filtre=filtre_actif) }}">
+                            {{ form.hidden_tag() }}
+                            <div class="champ-form">
+                                {{ form.reference.label (class_ = "champ-form-label") }}
+                                {{ form.reference (class_ ="champ-form-input") }}
+                            </div>
+                            <div class="champ-form">
+                                {{ form.nom.label (class_ = "champ-form-label") }}
+                                {{ form.nom (class_ ="champ-form-input") }}
+                            </div>
+                            <div class="champ-form">
+                                {{ form.fabricant.label (class_ = "champ-form-label") }}
+                                {{ form.fabricant (class_ ="champ-form-input") }}
+                            </div>
+                            <div class="champ-form">
+                                {{ form.quantite.label (class_ = "champ-form-label") }}
+                                {{ form.quantite (class_ ="champ-form-input") }}
+                            </div>
+                            <div id="champ-form-submit">
+                                <input type="hidden" name="filtre" value="{{ filtre_actif }}">
+                                <input type="submit" value="Créer">
+                            </div>
+                        </form>
+                    </div>
+            </div>
+        </div>
+        <section class="pagination">
                 <a href="{{ url_for('home',page=page-1) }}" class="bouton-pagination typographie"><</a>
                 <p>{{ page }}</p>
                 <a href="{{ url_for('home',page=page+1) }}" class="bouton-pagination typographie">></a>
-            </section>
-        </div>
+        </section>
     </body>
 </html>

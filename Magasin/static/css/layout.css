@@ -1,0 +1,158 @@
+body{
+    padding: 0;
+    margin: 0;   
+}
+
+nav {
+    padding: 1.2vh;  
+}
+
+.champ-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vh;
+    width: 100%;
+}
+
+.champ-form-label {
+    display: block;
+    width: 100%;
+    margin: 2%;
+}
+
+.champ-form-input{
+    width: 100%;
+    height: 4.5vh;
+}
+
+#champ-form-submit{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#champ-form-submit input{
+    display: flex;
+    width: 100%;
+    margin: 2vh;
+    padding: 10px;
+}
+
+table {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.bouton_filtre{
+    margin-right: 25%;
+    padding: 1%;
+}
+
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 2vh;
+}
+
+.bouton-pagination{
+    padding: 2vh;
+}
+
+th {
+    text-align: center;
+}
+
+.table-bordures {
+    width: 90%;
+}
+
+.table-bordures tr{
+    height: 8vh;
+}
+
+.table-borders-bottom td{
+    padding: 2%;
+    text-align: center;
+    width: 33.33%;
+}
+
+.table-borders-bottom {
+    width: 90%;
+    margin-bottom: 2%;
+}
+
+#gestion_produits{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 1vh;
+}
+
+#gestion_produits h1{
+    padding: 4vh;
+}
+
+#contenu_page_produits {
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    gap: 2vw;
+}
+
+#table_produits {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.3vh;
+    flex: 1;
+}
+
+#bouton_filtre {
+    padding: 10px;
+    margin-left: 2vh;
+    margin-top: 0; 
+    margin-bottom: 0.5vh; 
+    font-size: 18px;
+}
+
+#table_produits table{
+    margin: 2vh 2vh 0vh 2vh;
+}
+
+#table_produits th, #table_produits td{
+    text-align: left;
+    padding: 1.5vh 1.8vh;
+    font-size: 18px;
+
+}
+
+#table_produits button {
+    width: auto;
+    align-self: flex-start;
+    padding: 1vh 2vh;  
+    margin-left: 2vh;
+    font-size: 18px;
+}
+
+#creation_produit{
+    display: flex;
+    flex-basis: 30%;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px; 
+    margin-right: 40px;
+}
+
+#gestion_produits {
+    padding-top: 0vh; 
+}
+
+#gestion_produits h1 {
+    margin-top: 0rem;
+    margin-bottom: 0.7rem;
+}

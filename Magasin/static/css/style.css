@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+body {
+    background: #F5F5F0;
+    font-family: Inter;
+    font-weight: 500;
+    line-height: 130%;
+}
+
+
+nav {
+    background: #BEEAC5;
+}
+
+.typographie {
+    font-size: 2rem;
+    font-style: normal;
+    color: #000;
+}
+
+.flash {
+    color: #000;
+    font-family: Inter;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 130%;
+    background-color: #90EE90;
+}
+
+.flash-error {
+    color: #000;
+    font-family: Inter;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 130%;
+    background-color: #F08080;
+}
+
+
+
+.champ-form-label {
+    text-align: left;
+    font-size: 1.5rem;
+
+}
+
+.champ-form-input {
+    border-radius: 10px;
+    border: 1px solid #4F4F4F;
+    background: #FFF;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+#champ-form-submit input {
+    border-radius: 60px;
+    background: #2d983f;
+    transition: ease-in-out 0.3s;
+}
+
+#champ-form-submit input:hover {
+    border-radius: 60px;
+    background: #0c5928;
+}
+
+#champ-form-submit input:active{
+    border-radius: 60px;
+    background: #0d4f12;
+}
+
+table {
+    border-collapse: collapse;
+    border-radius: 20px;
+}
+
+
+.table-bordures {
+    border-collapse: separate; 
+    border-spacing: 0; 
+    border-radius: 20px;
+    border: 2px solid #4F4F4F; 
+    overflow: hidden; 
+}
+
+.table-bordures th, .table-bordures td{
+    border-bottom: 2px solid #4F4F4F;
+}
+
+.table-bordures  td{
+    text-align: center;
+}
+
+.bouton_filtre {
+    border-radius: 9.075px;
+    background: #E2B362;
+}
+
+
+.bouton-pagination:hover{
+    background-color: #C2A68C;
+    border-radius: 20px;
+    transition: ease-in-out 0.3s;
+}
+
+.table-bordures tr:last-child td{
+    border-bottom: None;
+}
+
+.btn-delete{
+    border-radius: 9.075px;
+    background: #F08080;
+}
+
+.btn-delete:hover{
+    background: #E63946;
+    transition: ease-in-out 0.3s;
+}
+
+#bouton_filtre{
+    background-color: #E2B362;
+    border-radius: 10px;
+    padding: 0.2rem;
+    font-size: 2rem;
+    margin: 2%;
+    flex-grow: 0;
+}
+
+#table_produits button, #bouton_filtre{
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: #E2B362;
+
+}
+
+#creation_produit {
+    border: 2px solid #474747;
+    border-radius: 15px;
+    margin-right: 20px;
+}
+
+#creation_produit h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+#creation_produit_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+#creation_produit_form {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+
+#champ-form-label {
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #555;
+}
+
+#champ-form-input {
+    padding: 20px;
+    border-radius: 8px;
+    max-height: 2px;
+    width: 100%;
+}
+
+#creation_produit_form #champ-form-  {
+    margin-top: 10px;
+    width: 500px;
+}
+
+

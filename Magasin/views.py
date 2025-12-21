@@ -1,16 +1,42 @@
 from flask import redirect, render_template, request, url_for
+from Magasin.forms import ProduitForm
 from Magasin.models import Produit
 from .app import app,db
 
-@app.route("/")
+@app.route("/", methods=['POST'])
 def home():
-    data = Produit.query.all()
+
+    if request.method == 'POST':
+        filtre = request.form.get('filtre')
+    else:
+        filtre = request.args.get('filtre')
+    
+    query = Produit.query
+
+    print("FILTRE", filtre)
+    match filtre:
+        case 'reference':
+            query = query.order_by(Produit.reference)
+        case 'nom':
+            query = query.order_by(Produit.nom)
+        case 'fabricant':
+            query = query.order_by(Produit.fabricant)
+        case 'quantite':
+            query = query.order_by(Produit.quantite)
+        case default:
+            query = query.order_by(Produit.reference)
+    
+    form = ProduitForm()
+    if form.validate_on_submit():
+        form.create_platform(filtre)
+    
+    data = query.all()
 
     page = request.args.get('page', 1, type=int)
 
     produits, page = _pagination(data, page)
     
-    return render_template("home.html", produits=produits, page=page)
+    return render_template("home.html", form=form, produits=produits, page=page, filtre_actif=filtre)
 
 def _pagination(data, page, element_par_page: int = 5):
     if page < 1:
