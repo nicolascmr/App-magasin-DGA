@@ -4,6 +4,49 @@
         <title>Application Magasin</title>
     </head>
     <body>
-        <h1>Application Magasin</h1>
+        <nav>
+            <h1>Application Magasin</h1>
+        </nav>
+        <div id="gestion_produits">
+            <h1>Gestion des produits</h1>
+            <div id="contenu_page_produits">
+                <div id="table_produits">
+                    <form action="{{ url_for('home') }}" method="post" id="filtre">
+                        <select id="bouton filtre" name="filtre" onchange="this.form.submit()">
+                            <option value="">Filtrer</option>
+                            <option value="nom" {% if filtre_actif == 'nom' %}selected{% endif %}>Nom</option>
+                            <option value="fabricant" {% if filtre_actif == 'fabricant' %}selected{% endif %}>Fabricant</option>
+                            <option value="quantite" {% if filtre_actif == 'quantite' %}selected{% endif %}>Quantité</option>
+                        </select>
+                    </form>
+                    <table class="table-bordures">
+                        <thead>
+                            <tr class="en-tete">
+                                <th>Référence</th>
+                                <th>Nom</th>
+                                <th>Fabricant</th>
+                                <th>Quantité</th>
+                                <th>Supression</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for produit in produits %}
+                            <tr>
+                                <td>{{ produit.reference }}</td>
+                                <td>{{ produit.nom }}</td>
+                                <td>{{ produit.fabricant }}</td>
+                                <td>{{ produit.quantite }}</td>
+                            </tr>
+ 
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            <section class="pagination">
+                <a href="{{ url_for('home',page=page-1) }}" class="bouton-pagination typographie"><</a>
+                <p>{{ page }}</p>
+                <a href="{{ url_for('home',page=page+1) }}" class="bouton-pagination typographie">></a>
+            </section>
+        </div>
     </body>
 </html>

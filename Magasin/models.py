@@ -5,14 +5,15 @@ class Produit(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     reference = db.Column(db.String(50), unique=True) 
     nom = db.Column(db.String(100))
-    quantite = db.Column(db.Integer)
     fabricant = db.Column(db.String(100))
+    quantite = db.Column(db.Integer)
 
-    def __init__(self, reference, nom, quantite, fabricant):
+    def __init__(self, reference, nom, fabricant, quantite):
         self.reference = reference
         self.nom = nom
-        self.quantite = quantite
         self.fabricant = fabricant
+        self.quantite = quantite
+
 
     def __repr__(self):
         return f"<Produit {self.reference} - {self.nom}>"
