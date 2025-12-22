@@ -9,12 +9,12 @@ from .app import db,app
 
 class ProduitForm(FlaskForm):
     reference = StringField('Référence', validators=[DataRequired()])
-    nom = IntegerField('Nom', validators=[DataRequired()])
-    fabricant = FloatField('Fabricant', validators=[DataRequired()])
+    nom = StringField('Nom', validators=[DataRequired()])
+    fabricant = StringField('Fabricant', validators=[DataRequired()])
     quantite = IntegerField('Quantité', validators=[DataRequired()])
     submit = SubmitField('Ajouter le produit')
 
-    def create_produit(self, filtre):
+    def creer_produit(self, filtre):
         produit = Produit.query.filter_by(reference=self.reference.data).first()
         if not produit:
             try:
@@ -26,6 +26,7 @@ class ProduitForm(FlaskForm):
                 )
                 db.session.add(produit)
                 print(produit)
+                print("PRODUIT CREEEEE")
                 db.session.commit()
                 flash("Plateforme créée avec succès !")
             except IntegrityError as e:

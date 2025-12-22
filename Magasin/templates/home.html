@@ -11,9 +11,9 @@
         </nav>
         <div id="gestion_produits">
             <h1>Gestion des produits</h1>
-            <div id="contenu_page_produits">
+            <div id="contenu_page_produits">    
                 <div id="table_produits">
-                    <form action="{{ url_for('home') }}" method="post" id="filtre">
+                    <form action="{{ url_for('home') }}" method="POST" id="filtre">
                         <select id="bouton_filtre" name="filtre" onchange="this.form.submit()">
                             <option value="">Filtrer</option>
                             <option value="reference" {% if filtre_actif == 'reference' %}selected{% endif %}>Référence</option>
@@ -21,6 +21,14 @@
                             <option value="fabricant" {% if filtre_actif == 'fabricant' %}selected{% endif %}>Fabricant</option>
                             <option value="quantite" {% if filtre_actif == 'quantite' %}selected{% endif %}>Quantité</option>
                         </select>
+                    </form>
+                    <form id="recherche_produit_form" method="POST" role="form" action="{{ url_for('rechercher_produit', filtre=filtre_actif) }}">
+                        {{ form.hidden_tag() }}
+                        <input class="champ-recherche-input" name="recherche" type="search">
+                        <input type="hidden" name="filtre" value="{{ filtre_actif }}">
+                        <div class="supress-btn">
+                            <input type="submit" value="Rechercher">
+                        </div>
                     </form>
                     <table class="table-bordures">
                         <thead>
@@ -39,8 +47,8 @@
                                 <td>{{ produit.nom }}</td>
                                 <td>{{ produit.fabricant }}</td>
                                 <td>{{ produit.quantite }}</td>
-                                <td><form action="{{ url_for('home', filtre=filtre_actif) }}" method="post" style="display: inline;">
-                                    <input type="hidden" name="nom" value="{{ produit.nom }}">
+                                <td><form action="{{ url_for('supprimer_produit', filtre=filtre_actif) }}" method="POST" style="display: inline;">
+                                    <input type="hidden" name="id" value="{{ produit.id }}">
                                     <button type="submit" class="supress-btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
                                         Supprimer
                                     </button>

@@ -53,6 +53,13 @@ nav {
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
 
+.champ-recherche-input {
+    border-radius: 10px;
+    border: 1px solid #4F4F4F;
+    background: #FFF;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
 #champ-form-submit input {
     border-radius: 60px;
     background: #2d983f;

@@ -16,5 +16,8 @@ def init_db():
     db.session.add(Produit("REF-008", "Beton", "Point P", 1))
     db.session.add(Produit("REF-009", "Fer", "Point P", 1))
     db.session.add(Produit("REF-010", "Aluminium", "Point P", 1))
+    db.session.add(Produit("REF-011", "Pot", "Point P", 1))
+    db.session.add(Produit("REF-012", "CAILLOU", "Point P", 1))
+
     db.session.commit()
     print("Base de données initialisée !")
