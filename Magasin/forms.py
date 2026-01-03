@@ -5,7 +5,7 @@ from wtforms import FloatField, IntegerField, StringField, SubmitField
 from wtforms.validators import DataRequired, Length, NumberRange
 
 from Magasin.models import Produit
-from .app import db,app
+from .app import db
 
 class ProduitForm(FlaskForm):
     reference = StringField('Référence', validators=[DataRequired(), Length(max=50)])
@@ -15,6 +15,11 @@ class ProduitForm(FlaskForm):
     submit = SubmitField('Ajouter le produit')
 
     def creer_produit(self, filtre):
+        """
+        Crée le produit en vérifiant que le produit ayant la même référence n'existe pas déja
+        
+        @param filtre: Le filtre actif
+        """
         produit = Produit.query.filter_by(reference=self.reference.data).first()
         print("produit", produit)
         if not produit:
@@ -27,9 +32,11 @@ class ProduitForm(FlaskForm):
                 )
                 db.session.add(produit)
                 db.session.commit()
+                #Affiche le message de validation de création du produit sur la page
                 flash("Produit ajouté avec succès !")
             except IntegrityError as e:
                 print(f"Erreur avec la base de donnée lors de la création du produit: {e}")
+                #affiche le message d'erreur sur la page
                 flash("Erreur avec la base de donnée lors de la création du produit", "error")
         else:
             flash("Impossible de créer deux produits qui portent la même référence !", "error")
