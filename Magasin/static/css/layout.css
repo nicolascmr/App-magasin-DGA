@@ -5,6 +5,25 @@ body{
 
 nav {
     padding: 1.2vh;  
+    display: flex;
+    flex-direction: row;
+}
+nav > div{
+    flex: 1;
+    display: flex;
+    justify-content: right;
+}
+
+.actions {
+    display: flex;
+    gap: 2vh;
+    justify-content: center;
+    padding: 30vh;
+}
+
+.actions a{
+    display: flex;
+    justify-content: center;
 }
 
 .champ-form {
@@ -86,6 +105,7 @@ th {
     width: 90%;
 }
 
+
 .table-bordures tr{
     height: 8vh;
 }
@@ -130,9 +150,6 @@ th {
 
 #bouton_filtre {
     padding: 10px;
-    margin-left: 2vh;
-    margin-top: 0; 
-    margin-bottom: 0.5vh; 
     font-size: 18px;
 }
 
@@ -144,7 +161,15 @@ th {
     text-align: left;
     padding: 1.5vh 1.8vh;
     font-size: 18px;
+}
 
+#table_produits th:nth-child(1), #table_produits td:nth-child(1) {
+    width: 30%;
+}
+
+#table_produits th:nth-child(5), #table_produits td:nth-child(5) {
+width: 1%;
+white-space: nowrap;
 }
 
 #table_produits button {
@@ -171,4 +196,32 @@ th {
 #gestion_produits h1 {
     margin-top: 0rem;
     margin-bottom: 0.7rem;
+}
+
+#outils {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 90%;
+    margin-left: 2vh;
+    margin-top: 0; 
+}
+
+.detail_produit {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3vh;
+}
+
+.detail_produit form{
+    display: flex;
+    gap: 3vh;
+    flex-direction: column;
+}
+
+.bouton-recherche img {
+    width: 3vh;
+    height: 3vh;
 }

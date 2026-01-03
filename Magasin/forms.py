@@ -2,20 +2,21 @@ from sqlite3 import IntegrityError
 from flask import flash, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import FloatField, IntegerField, StringField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length, NumberRange
 
 from Magasin.models import Produit
 from .app import db,app
 
 class ProduitForm(FlaskForm):
-    reference = StringField('Référence', validators=[DataRequired()])
-    nom = StringField('Nom', validators=[DataRequired()])
-    fabricant = StringField('Fabricant', validators=[DataRequired()])
-    quantite = IntegerField('Quantité', validators=[DataRequired()])
+    reference = StringField('Référence', validators=[DataRequired(), Length(max=50)])
+    nom = StringField('Nom', validators=[DataRequired(), Length(max=100)])
+    fabricant = StringField('Fabricant', validators=[DataRequired(), Length(max=100)])
+    quantite = IntegerField('Quantité', validators=[DataRequired(), NumberRange(min=0, message="La quantité ne peut pas être négative")])
     submit = SubmitField('Ajouter le produit')
 
     def creer_produit(self, filtre):
         produit = Produit.query.filter_by(reference=self.reference.data).first()
+        print("produit", produit)
         if not produit:
             try:
                 produit = Produit(
@@ -25,13 +26,24 @@ class ProduitForm(FlaskForm):
                     quantite=self.quantite.data
                 )
                 db.session.add(produit)
-                print(produit)
-                print("PRODUIT CREEEEE")
                 db.session.commit()
-                flash("Plateforme créée avec succès !")
+                flash("Produit ajouté avec succès !")
             except IntegrityError as e:
                 print(f"Erreur avec la base de donnée lors de la création du produit: {e}")
                 flash("Erreur avec la base de donnée lors de la création du produit", "error")
         else:
-            flash("Impossible de créer deux produits qui portent le même nom !", "error")
-        return redirect(url_for('home', filtre=filtre))
+            flash("Impossible de créer deux produits qui portent la même référence !", "error")
+        return redirect(url_for('gestion_produits', filtre=filtre))
+    
+    def modifier_produit(self, produit_id):
+        try:
+            produit = Produit.query.filter_by(id=produit_id).first()
+            produit.nom = self.nom.data
+            produit.fabricant = self.fabricant.data
+            produit.quantite = self.quantite.data
+            db.session.commit()
+            flash("Produit modifié avec succès !")
+        except IntegrityError as e:
+            print(f"Erreur avec la base de donnée lors de la création du produit: {e}")
+            flash("Erreur avec la base de donnée lors de la création du produit", "error")
+        return redirect(url_for('detail_produit', produit_id=produit_id))

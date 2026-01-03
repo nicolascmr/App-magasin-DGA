@@ -1,17 +1,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 body {
-    background: #F5F5F0;
     font-family: Inter;
     font-weight: 500;
     line-height: 130%;
+    background: #f0f0f0;
 }
 
 
 nav {
-    background: #BEEAC5;
+    background: #0a3782;
+    color: lightgray;   
+}
+nav a{
+    text-decoration: none;
+    color: lightgray;
+    font-size: 32px;
+    padding: 2vh;
 }
 
+.retour a{
+    display: flex;
+    align-items: center;
+    background: lightgray;
+    color: black;
+    border-radius: 10px;
+    border: solid;
+    text-decoration: none;
+    padding: 10px;
+    font-size: 24px;
+}
+
+.actions a{
+    background: lightgray;
+    color: black;
+    border-radius: 10px;
+    border: solid;
+    text-decoration: none;
+    padding: 3vh;
+    font-size: 42px;
+}
+
+.retour a:hover, .actions a:hover{
+    background: rgb(164, 164, 164);
+    transition: ease-in-out 0.2s;
+
+}
 .typographie {
     font-size: 2rem;
     font-style: normal;
@@ -60,22 +94,6 @@ nav {
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
 
-#champ-form-submit input {
-    border-radius: 60px;
-    background: #2d983f;
-    transition: ease-in-out 0.3s;
-}
-
-#champ-form-submit input:hover {
-    border-radius: 60px;
-    background: #0c5928;
-}
-
-#champ-form-submit input:active{
-    border-radius: 60px;
-    background: #0d4f12;
-}
-
 table {
     border-collapse: collapse;
     border-radius: 20px;
@@ -88,6 +106,22 @@ table {
     border-radius: 20px;
     border: 2px solid #4F4F4F; 
     overflow: hidden; 
+}
+
+#table_produits td:nth-child(1) {
+    text-decoration: solid;
+}
+
+#table_produits td:nth-child(1):hover {
+    text-decoration: underline;
+}
+
+.table-bordures tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.table-bordures tbody tr:nth-child(even) {
+    background-color: #e0e0e0;
 }
 
 .table-bordures th, .table-bordures td{
@@ -105,7 +139,7 @@ table {
 
 
 .bouton-pagination:hover{
-    background-color: #C2A68C;
+    background-color: #878787;
     border-radius: 20px;
     transition: ease-in-out 0.3s;
 }
@@ -114,31 +148,22 @@ table {
     border-bottom: None;
 }
 
-.btn-delete{
-    border-radius: 9.075px;
-    background: #F08080;
-}
 
-.btn-delete:hover{
-    background: #E63946;
-    transition: ease-in-out 0.3s;
-}
-
-#bouton_filtre{
-    background-color: #E2B362;
-    border-radius: 10px;
-    padding: 0.2rem;
-    font-size: 2rem;
-    margin: 2%;
-    flex-grow: 0;
-}
-
-#table_produits button, #bouton_filtre{
+#table_produits button, #bouton_filtre, #champ-form-submit input{
     font-size: 24px;
     font-weight: bold;
     border-radius: 10px;
-    background-color: #E2B362;
+    background-color: rgb(231, 249, 255);
+}
 
+
+#table_produits button:hover, #bouton_filtre:hover, #champ-form-submit input:hover{
+    transition: ease-in-out 0.2s;
+    background-color: rgb(201, 235, 247);
+}
+
+#champ-form-submit input:active{
+    background-color: rgb(181, 232, 251)
 }
 
 #creation_produit {
@@ -179,7 +204,7 @@ table {
     width: 100%;
 }
 
-#creation_produit_form #champ-form-  {
+#creation_produit_form #champ-form {
     margin-top: 10px;
     width: 500px;
 }

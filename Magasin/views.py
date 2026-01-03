@@ -4,15 +4,21 @@ from Magasin.models import Produit
 from .app import app,db
 from sqlalchemy import or_
 
-
-@app.route("/", methods=['GET','POST'])
+@app.route("/")
 def home():
+    return render_template("home.html")
 
-    if request.method == 'POST':
+@app.route("/gestion_produits/", methods=['GET','POST'])
+def gestion_produits():
+    form = ProduitForm()
+    if form.validate_on_submit():
+        return form.creer_produit(request.form.get('filtre'))
+
+    if request.method == 'POST' and 'submit' not in request.form:
         filtre = request.form.get('filtre')
-    else:
-        filtre = request.args.get('filtre')
-
+        return redirect(url_for('gestion_produits', filtre=filtre))
+    
+    filtre = request.args.get('filtre')
     recherche = request.args.get('recherche')
 
     query = Produit.query
@@ -29,10 +35,6 @@ def home():
             query = query.order_by(Produit.quantite)
         case default:
             query = query.order_by(Produit.reference)
-    
-    form = ProduitForm()
-    if form.validate_on_submit():
-        form.creer_produit(filtre)
 
     if recherche:
         recherches = recherche.strip().split(" ")
@@ -54,7 +56,19 @@ def home():
 
     produits, page = _pagination(data, page)
     
-    return render_template("home.html", form=form, produits=produits, page=page, filtre_actif=filtre)
+    return render_template("gestion_produits.html", form=form, produits=produits, page=page, filtre_actif=filtre)
+
+@app.route("/gestion_produits/<string:produit_id>/", methods=["GET", "POST"])
+def detail_produit(produit_id):
+
+    produit = Produit.query.filter_by(id=produit_id).first()
+
+    form = ProduitForm(obj=produit)
+
+    if form.validate_on_submit():
+        form.modifier_produit(produit_id)
+
+    return render_template("detail_produit.html", produit=produit, form=form)
 
 @app.route('/supression/', methods=['POST'])
 def supprimer_produit():
@@ -66,14 +80,14 @@ def supprimer_produit():
         db.session.commit()
 
     filtre = request.values.get('filtre')
-    return redirect(url_for('home', filtre=filtre))
+    return redirect(url_for('gestion_produits', filtre=filtre))
 
 @app.route('/recherche/', methods=['POST'])
 def rechercher_produit():
     recherche = request.values.get('recherche')
     filtre = request.values.get('filtre')
     
-    return redirect(url_for('home', filtre=filtre, recherche=recherche))
+    return redirect(url_for('gestion_produits', filtre=filtre, recherche=recherche))
 
 
 def _pagination(data, page, element_par_page: int = 5):
