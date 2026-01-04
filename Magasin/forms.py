@@ -32,11 +32,11 @@ class ProduitForm(FlaskForm):
                 )
                 db.session.add(produit)
                 db.session.commit()
-                #Affiche le message de validation de création du produit sur la page
+                # Affiche le message de validation de création du produit sur la page
                 flash("Produit ajouté avec succès !")
             except IntegrityError as e:
                 print(f"Erreur avec la base de donnée lors de la création du produit: {e}")
-                #affiche le message d'erreur sur la page
+                # Affiche le message d'erreur sur la page
                 flash("Erreur avec la base de donnée lors de la création du produit", "error")
         else:
             flash("Impossible de créer deux produits qui portent la même référence !", "error")
