@@ -55,3 +55,9 @@ La mise en place d'une authentification permettrait également de donner à chaq
 Plusieurs perspectives d'évolution sont envisageables pour enrichir cette application. Sur le plan de l'interface, la page d'accueil pourrait accueillir de nouveaux boutons ou un tableau de bord pour rediriger l'utilisateur vers différentes sections du site de manière plus ergonomique.
 
 De plus, si l'objectif devient la gestion de plusieurs points de vente, il serait pertinent de mettre en place un système de sélection de magasin. Cela impliquerait d'ajouter une table dédiée dans la base de données et de créer une association entre les magasins et les produits. Une telle évolution permettrait de visualiser et de gérer les stocks spécifiquement pour chaque site avant toute opération.
+
+### Amélioration réalisée 
+
+En plus des fonctionnalités attendues, j'ai ajouté un outil permettant d'exporter les produits au format CSV. Cette option permet de télécharger la liste complète des stocks ou une sélection précise basée sur les résultats de la barre de recherche.
+
+L'implémentation de cette fonctionnalité est particulièrement pertinente pour un outil de gestion car elle permet à l'utilisateur d'exploiter les données en dehors de l'application. Cela permet la réalisation de schémas ou la conservation d'un historique de l'état des stocks à un instant donné.

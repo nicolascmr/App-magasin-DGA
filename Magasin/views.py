@@ -1,5 +1,6 @@
 import csv
 import io
+from datetime import datetime
 from flask import make_response, redirect, render_template, request, url_for
 from Magasin.forms import ProduitForm
 from Magasin.models import Produit
@@ -111,8 +112,12 @@ def exporter_produits():
     output = make_response('\ufeff' + memoire.getvalue())
     
     memoire.close()
+
+    # Création du nom de fichier avec la date et l'heure actuelle
+    nom_fichier = datetime.now().strftime("%d_%m_%Y_%H_%M") + ".csv"
+
     # Configure le résultat pour que le fichier soit téléchargé au format csv
-    output.headers["Content-Disposition"] = "attachment; filename=export_produits.csv"
+    output.headers["Content-Disposition"] = f"attachment; filename=produits_{nom_fichier}"
     output.headers["Content-type"] = "text/csv; charset=utf-8"
 
     return output
