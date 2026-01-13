@@ -132,11 +132,12 @@ table {
     text-align: center;
 }
 
-.bouton_filtre {
-    border-radius: 9.075px;
-    background: #E2B362;
+#bouton_export{
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: rgb(231, 249, 255);
 }
-
 
 .bouton-pagination:hover{
     background-color: #878787;
@@ -157,7 +158,7 @@ table {
 }
 
 
-#table_produits button:hover, #bouton_filtre:hover, #champ-form-submit input:hover{
+#table_produits button:hover, #bouton_filtre:hover, #champ-form-submit input:hover, #bouton_export:hover{
     transition: ease-in-out 0.2s;
     background-color: rgb(201, 235, 247);
 }

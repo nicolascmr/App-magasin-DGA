@@ -1,4 +1,6 @@
-from flask import redirect, render_template, request, url_for
+import csv
+import io
+from flask import make_response, redirect, render_template, request, url_for
 from Magasin.forms import ProduitForm
 from Magasin.models import Produit
 from .app import app,db
@@ -29,35 +31,9 @@ def gestion_produits():
     filtre = request.args.get('filtre')
     recherche = request.args.get('recherche')
 
-    query = Produit.query
+    # Utilisation de la fonction commune pour récupérer la requête filtrée
+    query = _get_query_filtree(filtre, recherche)
 
-    # Filtre selon le filtre choisi et si rien est sélectionné la page est filtré par référence
-    match filtre:
-        case 'reference':
-            query = query.order_by(Produit.reference)
-        case 'nom':
-            query = query.order_by(Produit.nom)
-        case 'fabricant':
-            query = query.order_by(Produit.fabricant)
-        case 'quantite':
-            query = query.order_by(Produit.quantite)
-        case default:
-            query = query.order_by(Produit.reference)
-    # Si il y a une recherche l'ensemble des mots sont mis dans la liste data
-    if recherche:
-        recherches = recherche.strip().split(" ")
-        data = []
-        #Pour chaque mot de la recherche les données sont affinés pour chaque élement existant 
-        for mot in recherches:
-            motif = f'{mot}%'
-            query = query.filter(
-                or_(
-                    Produit.reference.like(motif),
-                    Produit.nom.like(motif),
-                    Produit.fabricant.like(motif)
-                )
-            )
-        
     # Toutes les données sont récupérées selon les élements choisis auparavant
     data = query.all()
 
@@ -111,6 +87,69 @@ def rechercher_produit():
     
     return redirect(url_for('gestion_produits', filtre=filtre, recherche=recherche))
 
+@app.route('/exporter_produits/', methods=['POST'])
+def exporter_produits():
+    """
+    Crée un fichier au format csv contenant la listes des produits affiché selon la recherche
+    et/ou le filtre actif
+    """
+    filtre = request.args.get('filtre')
+    recherche = request.args.get('recherche')
+
+    query = _get_query_filtree(filtre, recherche)
+    produits = query.all()
+    # Un espace mémoire est créé
+    memoire = io.StringIO()
+    
+    writer = csv.writer(memoire, delimiter=';') 
+    #Le contenu du csv est écrit
+    writer.writerow(['Reference', 'Nom', 'Fabricant', 'Quantite'])
+
+    for produit in produits:
+        writer.writerow([produit.reference, produit.nom, produit.fabricant, produit.quantite])
+    #Ajout du BOM pour forcer la lecture du contenu en UTF-8
+    output = make_response('\ufeff' + memoire.getvalue())
+    
+    memoire.close()
+    # Configure le résultat pour que le fichier soit téléchargé au format csv
+    output.headers["Content-Disposition"] = "attachment; filename=export_produits.csv"
+    output.headers["Content-type"] = "text/csv; charset=utf-8"
+
+    return output
+
+def _get_query_filtree(filtre, recherche):
+    """
+    Construit la requête en fonction des filtres et de la recherche
+    """
+    query = Produit.query
+
+    # Filtre selon le filtre choisi et si rien est sélectionné la page est filtré par référence
+    match filtre:
+        case 'reference':
+            query = query.order_by(Produit.reference)
+        case 'nom':
+            query = query.order_by(Produit.nom)
+        case 'fabricant':
+            query = query.order_by(Produit.fabricant)
+        case 'quantite':
+            query = query.order_by(Produit.quantite)
+        case default:
+            query = query.order_by(Produit.reference)
+    
+    # Si il y a une recherche l'ensemble des mots sont mis dans la liste data
+    if recherche:
+        recherches = recherche.strip().split(" ")
+        #Pour chaque mot de la recherche les données sont affinés pour chaque élement existant 
+        for mot in recherches:
+            motif = f'{mot}%'
+            query = query.filter(
+                or_(
+                    Produit.reference.like(motif),
+                    Produit.nom.like(motif),
+                    Produit.fabricant.like(motif)
+                )
+            )
+    return query
 
 def _pagination(data, page, element_par_page: int = 5):
     """
