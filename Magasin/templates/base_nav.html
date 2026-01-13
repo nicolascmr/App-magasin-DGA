@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Application Magasin</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+    </head>
+    <body>
+        <nav>
+            <a href="{{ url_for('home') }}">Application Magasin</a>
+            <div class="retour">
+                {% block retour %}
+
+                {% endblock %}
+            </div>
+        </nav> 
+        {% block contenu %}
+
+        {% endblock contenu %}
+    </body>
+</html>

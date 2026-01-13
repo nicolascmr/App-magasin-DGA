@@ -1,0 +1,98 @@
+{% extends "base_nav.html" %}
+
+{% block contenu %}
+    <div id="gestion_produits">
+        <h1>Gestion des produits</h1>
+        <div id="contenu_page_produits">    
+            <div id="table_produits">
+                <div id="outils">
+                    <form action="{{ url_for('gestion_produits') }}" method="POST" id="filtre">
+                        <select id="bouton_filtre" name="filtre" onchange="this.form.submit()">
+                            <option value="">Filtrer</option>
+                            <option value="reference" {% if filtre_actif == 'reference' %}selected{% endif %}>Référence</option>
+                            <option value="nom" {% if filtre_actif == 'nom' %}selected{% endif %}>Nom</option>
+                            <option value="fabricant" {% if filtre_actif == 'fabricant' %}selected{% endif %}>Fabricant</option>
+                            <option value="quantite" {% if filtre_actif == 'quantite' %}selected{% endif %}>Quantité</option>
+                        </select>
+                    </form>
+                    <form id="recherche_produit_form" method="POST" role="form" action="{{ url_for('rechercher_produit', filtre=filtre_actif) }}">
+                        {{ form.hidden_tag() }}
+                        <input class="champ-recherche-input" name="recherche" type="search">
+                        <input type="hidden" name="filtre" value="{{ filtre_actif }}">
+                        <button class="bouton-recherche">
+                            <img src="{{ url_for('static', filename='search.png') }}" alt="Rechercher">
+                        </button>
+                    </form>
+                </div>
+                <table class="table-bordures">
+                    <thead>
+                        <tr class="en-tete">
+                            <th>Nom</th>
+                            <th>Référence</th>
+                            <th>Fabricant</th>
+                            <th>Quantité</th>
+                            <th>Supression</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for produit in produits %}
+                        <tr onclick="location.href='{{ url_for('detail_produit', produit_id=produit.id) }}'" style="cursor:pointer;">
+                            <td>{{ produit.nom | truncate(25) }}</td>
+                            <td>{{ produit.reference | truncate(25) }}</td>
+                            <td>{{ produit.fabricant | truncate(25) }}</td>
+                            <td>{{ produit.quantite }}</td>
+                            <td onclick="event.stopPropagation();"><form action="{{ url_for('supprimer_produit', filtre=filtre_actif) }}" method="POST" style="display: inline;">
+                                <input type="hidden" name="id" value="{{ produit.id }}">
+                                <button type="submit" class="supress-btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
+                                    ❌
+                                </button>
+                            </form></td>
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+                <div id="creation_produit">
+                    <h2>Ajouter une produit</h2>
+                    <form id="creation_produit_form" method="POST" role="form" action="{{ url_for('gestion_produits', filtre=filtre_actif) }}">
+                        {{ form.hidden_tag() }}
+                        <div class="champ-form">
+                            {{ form.reference.label (class_ = "champ-form-label") }}
+                            {{ form.reference (class_ ="champ-form-input") }}
+                        </div>
+                        <div class="champ-form">
+                            {{ form.nom.label (class_ = "champ-form-label") }}
+                            {{ form.nom (class_ ="champ-form-input") }}
+                        </div>
+                        <div class="champ-form">
+                            {{ form.fabricant.label (class_ = "champ-form-label") }}
+                            {{ form.fabricant (class_ ="champ-form-input") }}
+                        </div>
+                        <div class="champ-form">
+                            {{ form.quantite.label (class_ = "champ-form-label") }}
+                            {{ form.quantite (class_ ="champ-form-input") }}
+                        </div>
+                        <div id="champ-form-submit">
+                            <input type="hidden" name="filtre" value="{{ filtre_actif }}">
+                            <input type="submit" value="Créer">
+                        </div>
+                    </form>
+                    {% with messages = get_flashed_messages(with_categories=True) %}
+                        {% if messages %}
+                            <div class="flashes">
+                                {% for categorie, message in messages %}
+                                    <p class="{% if categorie == 'error' %}flash-error{% else %}flash{% endif %}">{{ message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+        </div>
+    </div>
+    <section class="pagination">
+            <a href="{{ url_for('gestion_produits',page=page-1) }}" class="bouton-pagination typographie"><</a>
+            <p>{{ page }}</p>
+            <a href="{{ url_for('gestion_produits',page=page+1) }}" class="bouton-pagination typographie">></a>
+    </section>
+{% endblock %}
