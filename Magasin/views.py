@@ -31,7 +31,7 @@ def gestion_produits():
 
     query = Produit.query
 
-    # Filtre selon le filtre choisi et si rien est sélection on filtre par référence
+    # Filtre selon le filtre choisi et si rien est sélectionné la page est filtré par référence
     match filtre:
         case 'reference':
             query = query.order_by(Produit.reference)
